@@ -16,6 +16,7 @@ function maxStimuliAllowed() {
     }   
     if (savedata.useEmoji) quota = Math.min(quota, emoji.length);
     if (savedata.useJunkEmoji) quota = Math.min(quota, JUNK_EMOJI_COUNT);
+    if (savedata.useTetrominoes) quota = Math.min(quota, JUNK_TETROMINO_COUNT);
     if (savedata.useVisualNoise) quota = Math.min(quota, 1000);
     
     return quota - 1;
@@ -57,6 +58,11 @@ function createJunkEmoji() {
     return [id, `[junk]${id}[/junk]`];
 }
 
+function createTetrominoes() {
+    const id = Math.floor(Math.random() * JUNK_EMOJI_COUNT);
+    return [id, `[junk]${id}[/junk]`];
+}
+
 function createVisualNoiseTag() {
     const id = Math.floor(Math.random() * 999999);
     const splits = savedata.visualNoiseSplits;
@@ -76,6 +82,7 @@ function createStimuli(numberOfStimuli) {
         emoji: new Set(),
         junkEmoji: new Set(),
         visualNoise: new Set(),
+        Tetromino: new Set()
     };
 
     const stimulusTypes = new Set();
@@ -85,6 +92,7 @@ function createStimuli(numberOfStimuli) {
     if (savedata.useMeaningfulWords) stimulusTypes.add('meaningfulWords');
     if (savedata.useEmoji) stimulusTypes.add('emoji');
     if (savedata.useJunkEmoji) { stimulusTypes.add('junkEmoji'); }
+    if (savedata.useTetrominoes) { stimulusTypes.add('Tetromino'); }
     if (savedata.useVisualNoise) { stimulusTypes.add('visualNoise'); }
     if (!stimulusTypes.size) stimulusTypes.add('nonsenseWords');
 
